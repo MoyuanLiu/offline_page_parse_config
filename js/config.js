@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-17 17:24:32
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-10-18 17:16:15
+* @Last Modified time: 2017-10-19 13:42:22
 */
 /*
  * 初始化配置信息部分
@@ -13,16 +13,12 @@ if(username != null){
 	//document.getElementById('txt_username').placeholder = username;
 	document.getElementById('txt_username').value = username;
 }
+loadTemplate();
 var template = localStorage.stru_template;
-if(template!=null && template.toString()!=''){
-	template = JSON.parse(template);
-	var templateTable = document.getElementById('tab_template');
-	for (var i = 0; i < template.length; i++) {
-		var new_tr = templateTable.insertRow();
-		var new_tr_index = new_tr.rowIndex;
-		new_tr.innerHTML = "<td>"+new_tr_index+"</td><td><input type='text' width='200px' height='30px' value='"+template[i]['col_name']+"'/></td><td><input type='text' width='200px' height='30px' value='"+template[i]['col_show_name']+"'/></td><td><select name='fieldtype'><option>文本类型</option><option>多选框</option><option>下拉列表</option></select></td><td><input type='text' width='200px' height='30px' value='"+template[i]['col_content']+"'/></td>";
-	}
+if(template!=null&&template.toString()!=''){
+	loadDataTablebyTemplate(template);
 }
+
 
 
 /*
@@ -100,5 +96,84 @@ function saveFieldInfo(fieldinfo){
 			alert(localStorage.stru_template);
 		}
 
+	}
+}
+/*
+ * 导出模板按钮点击事件
+ * ************************************************************
+ */
+document.getElementById('btn_exporttemplate').onclick = function(){
+	var template = localStorage.stru_template;
+	if(template==null || template.toString()==''){
+		alert('当前没有配置模板');
+	}else{
+		prompt('当前的模板代码',template);
+	}	
+}
+/*
+ * 清空模板按钮点击事件
+ * ************************************************************
+ */
+document.getElementById('btn_cleartemplate').onclick = function(){
+	localStorage.stru_template='';
+	var templateTable = document.getElementById('tab_template');
+	var trs = templateTable.getElementsByTagName('tr');
+	while(trs.length>1){
+		templateTable.deleteRow(trs.length-1);
+	}	
+}
+/*
+ * 导入模板按钮点击事件
+ * ************************************************************
+ */
+document.getElementById('btn_importtemplate').onclick = function(){
+	var template = localStorage.stru_template;
+	if(template!=null && template.toString()!=''){
+		var overwrite = confirm('当前已有模板，是否覆盖？');
+		if(overwrite){
+			var new_template = prompt('导入模板代码');
+			localStorage.stru_template = new_template;
+			loadTemplate();
+		}
+	}else{
+		var new_template = prompt('导入模板代码');
+		localStorage.stru_template = new_template;
+		loadTemplate();
+	}
+
+}
+/*
+ * 加载模板方法
+ * ************************************************************
+ */
+function loadTemplate(){
+	var template = localStorage.stru_template;
+	var templateTable = document.getElementById('tab_template');
+	var trs = templateTable.getElementsByTagName('tr');
+	while(trs.length>1){
+		templateTable.deleteRow(trs.length-1);
+	}
+	if(template==null||template.toString()==''){
+		return;
+	}else{
+		template = JSON.parse(template);
+		for (var i = 0; i < template.length; i++) {
+			var new_tr = templateTable.insertRow();
+			var new_tr_index = new_tr.rowIndex;
+			new_tr.innerHTML = "<td>"+new_tr_index+"</td><td><input type='text' width='200px' height='30px' value='"+template[i]['col_name']+"'/></td><td><input type='text' width='200px' height='30px' value='"+template[i]['col_show_name']+"'/></td><td><select name='fieldtype'><option>文本类型</option><option>多选框</option><option>下拉列表</option></select></td><td><input type='text' width='200px' height='30px' value='"+template[i]['col_content']+"'/></td>";
+		}
+	}
+}
+/*
+ * 根据模板加载表头方法
+ * ************************************************************
+ */
+function loadDataTablebyTemplate(template){
+	template = JSON.parse(template);
+	var dataTable = document.getElementById('tab_data');
+	var new_tr = dataTable.insertRow();
+	new_tr.innerHTML = "<td>行号</td>";
+	for (var i = 0; i < template.length; i++) {
+		new_tr.innerHTML+="<td>"+template[i]['col_show_name']+"</td>";
 	}
 }
