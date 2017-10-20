@@ -1,0 +1,30 @@
+/*
+* @Author: myliu
+* @Date:   2017-10-20 09:59:59
+* @Last Modified by:   lisiyu
+* @Last Modified time: 2017-10-20 10:01:58
+*/
+#iframe_bar {
+  border-width: 0 !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 300px !important;  /* bar.css body height */
+  z-index: 2147483647 !important;
+  transform: translate3d(0, 0, 0) !important;
+  transition: transform 0.2s ease-out !important;
+}
+
+#iframe_bar.bottom {
+  top: auto !important;
+  bottom: 0 !important;
+}
+
+#iframe_bar.hidden {
+  transform: translate3d(0, -100%, 0) !important;
+}
+
+#iframe_bar.hidden.bottom {
+  transform: translate3d(0, 100%, 0) !important;
+}

@@ -27,17 +27,19 @@
 "content_scripts": [
   {
     "matches": ["<all_urls>"],
-    "js": ["js/content.js"],
-    "run_at": "document_start"
+    "js": ["js/content.js","js/jquery-1.11.3.min.js"],
+    "css": ["css/content.css"]
   }
 
 ],
 "omnibox": { "keyword" : "search" },
 "web_accessible_resources": [
     "html/bar.html",
-    "js/content.js"
+    "js/content.js",
+    "js/jquery-1.11.3.min.js"
   ]
 }
+
 
 
 

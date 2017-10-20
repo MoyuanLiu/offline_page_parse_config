@@ -18,11 +18,12 @@
   if(stru_template==null){
 	localStorage.strutemplate='';
   }
+
+  //设置徽章信息
 	var recordcount = localStorage.recordcount;//本地数据数
-  	//chrome.browserAction.setBadgeBackgroundColor({color: [0, 0, 0, .7]});
-  	//chrome.browserAction.setBadgeBackgroundColor({color: [255, 30, 0, 255]});
-  	
 	chrome.browserAction.setBadgeText({text: recordcount+""});
+
+  //桌面提示参数
   	var mail_opt={
         type: "list",
         title: "结构化页面提取器",
@@ -32,7 +33,7 @@
         	{ title: "1.", message: "当前用户："+localStorage.username},
 			{ title: "2.", message: "本地已有数据量："+localStorage.recordcount+"条"}
 				]
-      };//桌面提示参数
+      };
     if(stru_template==''){//当模板没有配置的时候提示在设置中配置
   		mail_opt = {
         	type: "list",
@@ -55,8 +56,35 @@
       chrome.notifications.clear(id, function(){});  
   		}, 3000);  
 	  });
-  
 
+    function handleRequest(request, sender, cb) {
+  // 访问控制，非法访问时页面跳转
+  if(request.type == 'redirect') {
+      chrome.tabs.query({active: true, currentWindow: true},function(activeTabs) {
+          var activeTabUrl = activeTabs[0].url;
+          if (activeTabUrl.indexOf(request.errorUrl) == -1) {
+              chrome.tabs.create({url: request.url, active: true});
+          }
+      });
+  }
+  // 把页面来的消息再传回给bar页面
+  else {
+      chrome.tabs.sendMessage(sender.tab.id, request, cb);
+  }
+}
+
+//注册消息监听器
+chrome.runtime.onMessage.addListener(handleRequest);
+ /*
+ * 插件点击事件
+ * ******************************
+ * */ 
+chrome.browserAction.onClicked.addListener(function(tab) {
+  chrome.tabs.query({active: true,  currentWindow: true},
+      function(activeTabs) {
+  chrome.tabs.sendMessage(tab.id, 'showHide');
+});
+});
  
   
 // 	  /*
