@@ -1,8 +1,8 @@
 /*
 * @Author: myliu
 * @Date:   2017-10-17 17:24:32
-* @Last Modified by:   lisiyu
-* @Last Modified time: 2017-10-19 13:42:22
+* @Last Modified by:   ThinkPad
+* @Last Modified time: 2017-10-22 15:14:59
 */
 /*
  * 初始化配置信息部分
@@ -61,7 +61,7 @@ alert('保存成功。');
 document.getElementById('btn_addfield').onclick = function(){
 		var new_tr = document.getElementById('tab_template').insertRow();
 		var new_tr_index = new_tr.rowIndex;
-		new_tr.innerHTML = "<td>"+new_tr_index+"</td><td><input type='text' width='200px' height='30px' name='fieldname' value='字段名称'/></td><td><input type='text' width='200px' height='30px' name='fieldshowname' value='字段显示名称'/></td><td><select name='fieldtype'><option>文本类型</option><option>多选框</option><option>下拉列表</option></select></td><td><input type='text' width='200px' height='30px' name='fieldcontent' value='字段内容'/></td>";
+		new_tr.innerHTML = "<td>"+new_tr_index+"</td><td><input type='text' width='200px' height='30px' name='fieldname' value='字段名称'/></td><td><input type='text' width='200px' height='30px' name='fieldshowname' value='字段显示名称'/></td><td><select name='fieldtype'><option value='text'>文本类型</option><option value='checkbox'>多选框</option><option value='select'>下拉列表</option></select></td><td><input type='text' width='200px' height='30px' name='fieldcontent' value='字段内容'/></td>";
 }
 /*
  * 删除字段按钮点击事件
