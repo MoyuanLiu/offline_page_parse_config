@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-19 14:59:02
 * @Last Modified by:   ThinkPad
-* @Last Modified time: 2017-10-23 20:42:34
+* @Last Modified time: 2017-10-23 22:23:29
 */
 
 
@@ -31,7 +31,7 @@ if(template != null && template.toString() != ''){
 		label_field.innerText = template[i]['col_show_name'];
 		var field_type = template[i]['col_type'];
 		var field_input = document.createElement('input');
-		field_input.className = 'input';
+		field_input.class = 'input';
 		if(field_type=='text'){
 			field_input = document.createElement('input');
 			field_input.id='onfocus';
@@ -98,23 +98,27 @@ function saveRecord(){
 	var fields = main.getElementsByClassName('field');
 	var record = {};
 	for (var i = 0; i < fields.length; i++) {
-		var colname = fields[i].getElementsByClassName('hidden')[0].innerText;
+		var colname = fields[i].getElementsByClassName('hidden')[0].value;
+		alert('colname'+colname);
 		var values = fields[i].getElementsByClassName('input');
-		for (var i = 0; i < values.length; i++) {
-			if(i==values.length-1){
-				record[colname]+=values[i].value;
-			}else{
-				record[colname]+=values[i].value+',';
-			}
-		}
+		alert(values.length);
+		// for (var i = 0; i < values.length; i++) {
+		// 	if(i==values.length-1){
+		// 		record[colname]+=values[i].value;
+		// 	}else{
+		// 		record[colname]+=values[i].value+',';
+		// 	}
+		// }
 		if(record[colname]=='$username'){
 			record[colname] = localStorage.username;
 		}
 		
 	}
 	data.push(record);
-	localStorage.data = data;
-	alert(record.toString());
+	localStorage.data = JSON.stringify(data);
+	// var count = localStorage.recordcount;
+	// localStorage.recordcount = count+1;
+	alert(JSON.stringify(record));
 	alert('数据录入成功');
 
 }
