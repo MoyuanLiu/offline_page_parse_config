@@ -82,10 +82,24 @@ chrome.runtime.onMessage.addListener(handleRequest);
 chrome.browserAction.onClicked.addListener(function(tab) {
   chrome.tabs.query({active: true,  currentWindow: true},
       function(activeTabs) {
-  chrome.tabs.sendMessage(tab.id, 'showHide');
+  chrome.tabs.sendMessage(tab.id, {type:'showHide'});
 });
 });
- 
+ /*
+ * 右键菜单
+ * ************************************************************
+ */
+chrome.contextMenus.create({
+    type: 'normal',
+    title: '填入字段信息',
+    id: 'fill_field',
+    contexts: ['selection'],
+    onclick: fillFieldText
+});
+function fillFieldText(info,tab){
+  alert('选中的文本是：'+info.selectionText);
+  chrome.tabs.sendMessage(sender.tab.id, {type:'fillField',text:info.selectionText});
+}
   
 // 	  /*
 // 	   *搜索引擎
