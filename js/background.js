@@ -57,24 +57,7 @@
   		}, 3000);  
 	  });
 
-    function handleRequest(request, sender, cb) {
-  // 访问控制，非法访问时页面跳转
-  if(request.type == 'redirect') {
-      chrome.tabs.query({active: true, currentWindow: true},function(activeTabs) {
-          var activeTabUrl = activeTabs[0].url;
-          if (activeTabUrl.indexOf(request.errorUrl) == -1) {
-              chrome.tabs.create({url: request.url, active: true});
-          }
-      });
-  }
-  // 把页面来的消息再传回给bar页面
-  else {
-      chrome.tabs.sendMessage(sender.tab.id, request, cb);
-  }
-}
 
-//注册消息监听器
-chrome.runtime.onMessage.addListener(handleRequest);
  /*
  * 插件点击事件
  * ******************************
@@ -82,10 +65,24 @@ chrome.runtime.onMessage.addListener(handleRequest);
 chrome.browserAction.onClicked.addListener(function(tab) {
   chrome.tabs.query({active: true,  currentWindow: true},
       function(activeTabs) {
-  chrome.tabs.sendMessage(tab.id, 'showHide');
+  chrome.tabs.sendMessage(tab.id, {type:'showHide'});
 });
 });
- 
+ /*
+ * 右键菜单
+ * ************************************************************
+ */
+chrome.contextMenus.create({
+    type: 'normal',
+    title: '填入字段信息',
+    id: 'fill_field',
+    contexts: ['selection'],
+    onclick: fillFieldText
+});
+function fillFieldText(info,tab){
+  alert('选中的文本是：'+info.selectionText);
+  chrome.runtime.sendMessage({type:'fillField',text:info.selectionText});
+}
   
 // 	  /*
 // 	   *搜索引擎
