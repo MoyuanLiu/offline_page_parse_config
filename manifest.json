@@ -9,7 +9,8 @@
       "tabs",
       "activeTab",
       "notifications",
-      "contextMenus"
+      "contextMenus",
+      "webRequest"
     ],
     "background": 
   {
@@ -22,7 +23,6 @@
   {
     "default_icon" : "icon/icon.png",
     "default_title": "结构化提取"
-    
   },
 
 "content_scripts": [
@@ -37,7 +37,8 @@
 "web_accessible_resources": [
     "html/bar.html",
     "js/content.js",
-    "js/jquery-1.11.3.min.js"
+    "js/jquery-1.11.3.min.js",
+    "js/bar.js"
   ]
 }
 

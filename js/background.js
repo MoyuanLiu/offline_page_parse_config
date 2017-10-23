@@ -57,24 +57,7 @@
   		}, 3000);  
 	  });
 
-    function handleRequest(request, sender, cb) {
-  // 访问控制，非法访问时页面跳转
-  if(request.type == 'redirect') {
-      chrome.tabs.query({active: true, currentWindow: true},function(activeTabs) {
-          var activeTabUrl = activeTabs[0].url;
-          if (activeTabUrl.indexOf(request.errorUrl) == -1) {
-              chrome.tabs.create({url: request.url, active: true});
-          }
-      });
-  }
-  // 把页面来的消息再传回给bar页面
-  else {
-      chrome.tabs.sendMessage(sender.tab.id, request, cb);
-  }
-}
 
-//注册消息监听器
-chrome.runtime.onMessage.addListener(handleRequest);
  /*
  * 插件点击事件
  * ******************************
@@ -98,7 +81,7 @@ chrome.contextMenus.create({
 });
 function fillFieldText(info,tab){
   alert('选中的文本是：'+info.selectionText);
-  chrome.tabs.sendMessage(sender.tab.id, {type:'fillField',text:info.selectionText});
+  chrome.runtime.sendMessage({type:'fillField',text:info.selectionText});
 }
   
 // 	  /*

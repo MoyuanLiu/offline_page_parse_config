@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-19 14:59:02
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-10-23 15:35:38
+* @Last Modified time: 2017-10-23 16:34:47
 */
 
 'use strict';
@@ -29,12 +29,6 @@ if(message.type=='showHide'){
   }else{
   	barFrame.classList.add('hidden');
   }
-}
-if(message.type=='fillField'){
-	alert('onfocus:'+message.text);
-	var onfocus = document.getElementById('onfocus');
-	 alert(onfocus);
-	onfocus.value = message.text;
 }
   });
 
