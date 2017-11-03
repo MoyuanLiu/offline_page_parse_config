@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-19 14:59:02
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-10-24 20:17:43
+* @Last Modified time: 2017-11-03 17:18:44
 */
 
 
@@ -20,18 +20,21 @@ if(template != null && template.toString() != ''){
 	var div_main = document.createElement('div');
 	div_main.id = 'main';
 	var tab_template = document.createElement('table');
+	tab_template.id = 'tab_template';
 	div_main.appendChild(tab_template);
 	template = JSON.parse(template);
 	for (var i = 0; i < template.length; i++) {
-		// if(i==2){
-		// 	alert(i+':'+template[i]['col_show_name']);
-		// }
-		alert(i+':'+template[i]['col_show_name']);
+		//alert(i+':'+template[i]['col_show_name']);
 		var row = tab_template.insertRow();
 		var label_cell = row.insertCell();
 		var label_field = document.createElement('label');
 		label_field.innerText = template[i]['col_show_name'];
+		var input_hidden = document.createElement('input');
+		input_hidden.type = 'hidden';
+		input_hidden.className = 'hidden';
+		input_hidden.value = template[i]['col_name'];
 		label_cell.appendChild(label_field);
+		label_cell.appendChild(input_hidden);
 		var input_cell = row.insertCell();
 		var col_type = template[i]['col_type'];
 		var field_input = document.createElement('input');
@@ -39,12 +42,12 @@ if(template != null && template.toString() != ''){
 			field_input = document.createElement('input');
 			field_input.type = 'text';
 			field_input.className = 'content';
+			field_input.onfocus = addFocus;
 		}else if(col_type=='const'){
-			alert('const:'+template[i]['col_content']);
 			field_input = document.createElement('input');
 			field_input.type = 'text';
 			field_input.value = template[i]['col_content'];
-			//field_input.readonly = 'readonly';
+			field_input.readOnly = 'readonly';
 			field_input.className = 'content';
 		}else if(col_type=='select'){
 			field_input = document.createElement('select');
@@ -60,27 +63,59 @@ if(template != null && template.toString() != ''){
 			field_input = document.createElement('div');
 			var col_content_arr = template[i]['col_content'].split(';');
 			for (var i = 0; i < col_content_arr.length; i++) {
-				field_input.innerHTML = field_input.innerHTML+"<input type='checkbox' value='"+col_content_arr[i]+"'>"+col_content_arr[i];
+				field_input.innerHTML = field_input.innerHTML+"<input type='checkbox' class='content' value='"+col_content_arr[i]+"'>"+col_content_arr[i];
 				var field_input_sub = document.createElement('br');
 				field_input.appendChild(field_input_sub);
 			}
-			field_input.className = 'content';
 		}
 		input_cell.appendChild(field_input);
 	}
-	// var btn_save = document.createElement('input');
-	// btn_save.type = 'button';
-	// btn_save.value = 'Save record';
-	// btn_save.onclick = saveRecord;
-	// div_main.appendChild(btn_save);
-	// body.appendChild(div_main);
+	var btn_save = document.createElement('input');
+	btn_save.type = 'button';
+	btn_save.value = 'Save record';
+	btn_save.onclick = saveRecord;
+	div_main.appendChild(btn_save);
+	body.appendChild(div_main);
 }
+/**
+ * 提取页面信息填入当前焦点
+ */
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
     if (request.type == "fillField"){
-    	var current_focus = document.getElementById('onfocus');
-    	current_focus.value = request.text;
+    	var current_focus = document.getElementsByClassName('onfocus')[0];
+    	alert(current_focus.tagName);
+    	if(current_focus.tagName == 'INPUT'){	
+			current_focus.value = request.text;
+    	}
+    	
     }
   });
+/*
+为当前焦点文本框添加焦点
+ */
+function addFocus(sender){
+	 var old_focus = document.getElementsByClassName('onfocus')[0];
+	 if(old_focus!=null){
+		old_focus.classList.remove('onfocus');
+	 }
+	var current_focus = document.activeElement;
+		if(current_focus.tagName == 'INPUT' ){
+			current_focus.classList.add('onfocus');
+    	}
+}
+/*
+为当前焦点文本框添加焦点
+ */
+function clearFocus(sender){
+var current_focus = document.activeElement;
+if(current_focus.tagName == 'input' && current_focus.type == 'text' && current_focus.readOnly!='readonly'){
+			current_focus.classList.add('onfocus');
+    	}
+// sender.classList.add('onfocus');
+}
+/*
+保存数据信息
+ */
 function saveRecord(){
 	var data = localStorage.data;
 	if(data==null||data.toString()==''){
@@ -89,19 +124,23 @@ function saveRecord(){
 		data = JSON.parse(data);
 	}
 	var main = document.getElementById('main');
-	var fields = main.getElementsByClassName('field');
+	var tab_template = document.getElementById('tab_template');
 	var record = {};
-	for (var i = 0; i < fields.length; i++) {
-		var colname = fields[i].getElementsByClassName('hidden')[0].value;
-		alert('colname'+colname);
-		var values = fields[i].getElementsByClassName('content');
-		alert(values);
+	var trs = tab_template.getElementsByTagName('tr');
+alert(trs.length);
+	for (var i = 0; i < trs.length; i++) {
+		var colname = trs[i].getElementsByClassName('hidden')[0].value;
+		alert('colname:'+colname);
+		var values = trs[i].getElementsByClassName('content');
+		//alert(values);
 		alert(values.length);
-		for (var i = 0; i < values.length; i++) {
-			if(i==values.length-1){
-	 		record[colname]+=values[i].value;
+		record[colname]="";
+		for (var j = 0; j < values.length; j++) {
+			alert(values[j].value);
+			if(j==values.length-1){
+	 		record[colname]+=values[j].value;
 		 	}else{
-		 		record[colname]+=values[i].value+',';
+		 		record[colname]+=values[j].value+',';
 		 	}
 		 }
 		if(record[colname]=='$username'){
