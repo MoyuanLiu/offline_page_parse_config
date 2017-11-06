@@ -26,12 +26,21 @@
 				</tr>
 			</table>
 		</div>
+		<input type="button" value="Export data" id="btn_exportdata" /><br>
 		<div>
 			<table id="tab_data">
 				<thead>当前数据</thead>
 				
 			</table>
 		</div>
+		<div id="page_view">
+			<input type="button" value="上一页" id="btn_lastpage" />
+			<label id="cur_page"></label>
+			<input type="button" value="下一页" id="btn_nextpage" />
+			<select id="page_select"></select>
+			<input type="button" value="跳转" id="btn_jumppage" />
+		</div>
+		<br />
 		<button type="button" id="btn_save" value="save">保存所有设置</button>
     	</div>
 		

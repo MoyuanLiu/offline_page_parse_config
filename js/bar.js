@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-19 14:59:02
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-11-03 17:18:44
+* @Last Modified time: 2017-11-06 17:37:47
 */
 
 
@@ -156,5 +156,9 @@ alert(trs.length);
 	// localStorage.recordcount = count+1;
 	alert(JSON.stringify(record));
 	alert('数据录入成功');
+	 var record = localStorage.recordcount;
+	 var count = parseInt(record);
+	 localStorage.recordcount = count+1;
+	 chrome.browserAction.setBadgeText({text: localStorage.recordcount+""});
 
 }

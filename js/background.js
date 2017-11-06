@@ -7,21 +7,20 @@
   ******************************************
   **/
   var userName = localStorage.username;
-  var recordCount = localStorage.recordcount;
+  var recordcount = localStorage.recordcount;
   var stru_template = localStorage.stru_template;
   if(userName==null){
   	localStorage.username='username';
   }
-  if(recordCount==null){
-	localStorage.recordcount=0;
-  }
+
   if(stru_template==null){
 	localStorage.strutemplate='';
   }
-
+if(recordcount==null){
+  localStorage.recordcount=0;
+  }
   //设置徽章信息
-	var recordcount = localStorage.recordcount;//本地数据数
-	chrome.browserAction.setBadgeText({text: recordcount+""});
+	chrome.browserAction.setBadgeText({text: localStorage.recordcount+""});
 
   //桌面提示参数
   	var mail_opt={

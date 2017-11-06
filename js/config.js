@@ -1,8 +1,8 @@
 /*
 * @Author: myliu
 * @Date:   2017-10-17 17:24:32
-* @Last Modified by:   ThinkPad
-* @Last Modified time: 2017-10-23 21:21:15
+* @Last Modified by:   lisiyu
+* @Last Modified time: 2017-11-06 17:03:01
 */
 /*
  * 初始化配置信息部分
@@ -13,11 +13,9 @@ if(username != null){
 	//document.getElementById('txt_username').placeholder = username;
 	document.getElementById('txt_username').value = username;
 }
-loadTemplate();
-var template = localStorage.stru_template;
-if(template!=null&&template.toString()!=''){
-	loadDataTablebyTemplate(template);
-}
+
+loadDataPage(1);
+
 
 
 
@@ -174,16 +172,63 @@ function loadTemplate(){
 		}
 	}
 }
+
+
 /*
- * 根据模板加载表头方法
+ * 导出数据按钮点击事件
  * ************************************************************
  */
-function loadDataTablebyTemplate(template){
+document.getElementById('btn_exportdata').onclick = function(){
+	var data = localStorage.data;
+	if(data==null || data.toString()==''){
+		alert('当前没有配置模板');
+	}else{
+		prompt('当前的模板代码',data);
+	}	
+}
+/*
+ * 数据分页方法
+ * ************************************************************
+ */
+function loadDataPage(pagenum){
+	var data = localStorage.data;
+	if(data==null||data==""){
+		return;
+	}
+	var totalRecord = data.length
+	int totalPageNum = (totalRecord  +  pageSize  - 1) / pageSize;  
+var lab_curpage = document.getElementById('cur_page');
+lab_curpage.innerText="第"+pagenum+"页";
+var lab_curpage = document.getElementById('cur_page');
+
+var pageSize = 20;
+
+var dataTable = document.getElementById('tab_data');
+dataTable.innerHTML='';
+	var template = localStorage.stru_template;
+	if(template==null||template==""){
+		return;
+	}
 	template = JSON.parse(template);
-	var dataTable = document.getElementById('tab_data');
+	
+	data = JSON.parse(data);
+	var startRow = (pagenum - 1) * pageSize+1; 
+	var endRow = pagenum * pageSize;
+	if(data.length<endRow){
+		endRow = data.length;
+	}
 	var new_tr = dataTable.insertRow();
 	new_tr.innerHTML = "<td>行号</td>";
 	for (var i = 0; i < template.length; i++) {
 		new_tr.innerHTML+="<td>"+template[i]['col_show_name']+"</td>";
+	}
+	for (var i = startRow; i <= endRow; i++) {
+		var new_tr = dataTable.insertRow();
+		new_tr.innerHTML = "<td>"+i+"</td>";
+		for (var j = 0; j < template.length; j++) {
+			var new_cell = new_tr.insertCell();
+			alert( data[i-1][template[j]['col_name']]);
+			new_cell.innerText = data[i-1][template[j]['col_name']];
+		}
 	}
 }
