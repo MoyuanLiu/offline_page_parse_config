@@ -73,6 +73,12 @@ chrome.browserAction.onClicked.addListener(function(tab) {
  */
 chrome.contextMenus.create({
     type: 'normal',
+    title: '填入当前页面url',
+    id: 'fill_cur_url',
+    onclick: fillTabUrl
+});
+chrome.contextMenus.create({
+    type: 'normal',
     title: '填入字段信息',
     id: 'fill_field',
     contexts: ['selection'],
@@ -81,6 +87,21 @@ chrome.contextMenus.create({
 function fillFieldText(info,tab){
   alert('选中的文本是：'+info.selectionText);
   chrome.runtime.sendMessage({type:'fillField',text:info.selectionText});
+}
+chrome.contextMenus.create({
+    type: 'normal',
+    title: '填入链接url',
+    id: 'fill_url',
+    contexts: ['link'],
+    onclick: fillUrlAddress
+});
+function fillUrlAddress(info,tab){
+  alert('选中的链接是：'+info.linkUrl);
+  chrome.runtime.sendMessage({type:'fillField',text:info.linkUrl});
+}
+function fillTabUrl(info,tab){
+  alert('提交当前页面的链接：'+tab.url);
+  chrome.runtime.sendMessage({type:'fillField',text:tab.url});
 }
   
 // 	  /*

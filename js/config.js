@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-17 17:24:32
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-11-07 18:02:32
+* @Last Modified time: 2017-11-08 15:07:38
 */
 /*
  * 初始化配置信息部分
@@ -237,7 +237,9 @@ function loadDataPage(pagenum){
 		new_tr.innerHTML = "<td>"+i+"</td>";
 		for (var j = 0; j < template.length; j++) {
 			var new_cell = new_tr.insertCell();
-			new_cell.innerText = data[i-1][template[j]['col_name']];
+			var new_cell_span = document.createElement('span');
+			new_cell_span.innerText = data[i-1][template[j]['col_name']];
+			new_cell.appendChild(new_cell_span);
 		}
 	}
 }
@@ -261,37 +263,33 @@ document.getElementById('btn_lastpage').onclick = function(){
  * ************************************************************
  */
 document.getElementById('btn_nextpage').onclick = function(){
-	console.log("next page");
-	alert("next page");
-	// var pageSize = 20;
-	// var data = localStorage.data;
-	// if(data==null||data==""){
-	// 	data="[]";
-	// }
-	// alert("data"+data);
-	// data = JSON.parse(data);
-	// var totalRecord = data.length;
-	// alert("totalRecord"+totalRecord);
-	// var totalPageNum =  Math.floor((totalRecord  +  pageSize  - 1) / pageSize);
-	// if (totalPageNum==0) {
-	// 	totalPageNum = 1;
-	// }
-	// alert(totalPageNum);
-	// var lab_curpage = document.getElementById('cur_page');
-	// var curpage = lab_curpage.innerText;
-	// curpage = parseInt(curpage);
-	// if(curpage==totalPageNum){
-	// 	alert('当前已经是末页了');
-	// }else{
-	// 	loadDataPage(curpage+1);
-	// }
+
+	var pageSize = 20;
+	var data = localStorage.data;
+	if(data==null||data==""){
+		data="[]";
+	}
+	data = JSON.parse(data);
+	var totalRecord = data.length;
+	var totalPageNum =  Math.floor((totalRecord  +  pageSize  - 1) / pageSize);
+	if (totalPageNum==0) {
+		totalPageNum = 1;
+	}
+	var lab_curpage = document.getElementById('cur_page');
+	var curpage = lab_curpage.innerText;
+	curpage = parseInt(curpage);
+	if(curpage==totalPageNum){
+		alert('当前已经是末页了');
+	}else{
+		loadDataPage(curpage+1);
+	}
 	
 }
 /*
  * 页面跳转按钮点击事件
  * ************************************************************
  */
-document.getElementById('btn_nextpage').onclick = function(){
+document.getElementById('btn_jumppage').onclick = function(){
 	var select_page = parseInt(document.getElementById('page_select').value);
 	loadDataPage(select_page);
 }
