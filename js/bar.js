@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-19 14:59:02
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-11-06 17:37:47
+* @Last Modified time: 2017-11-07 09:09:13
 */
 
 
@@ -127,7 +127,7 @@ function saveRecord(){
 	var tab_template = document.getElementById('tab_template');
 	var record = {};
 	var trs = tab_template.getElementsByTagName('tr');
-alert(trs.length);
+
 	for (var i = 0; i < trs.length; i++) {
 		var colname = trs[i].getElementsByClassName('hidden')[0].value;
 		alert('colname:'+colname);

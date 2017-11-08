@@ -14,7 +14,7 @@
   }
 
   if(stru_template==null){
-	localStorage.strutemplate='';
+	localStorage.stru_template='';
   }
 if(recordcount==null){
   localStorage.recordcount=0;

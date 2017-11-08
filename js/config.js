@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-17 17:24:32
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-11-06 17:03:01
+* @Last Modified time: 2017-11-07 18:02:32
 */
 /*
  * 初始化配置信息部分
@@ -13,7 +13,7 @@ if(username != null){
 	//document.getElementById('txt_username').placeholder = username;
 	document.getElementById('txt_username').value = username;
 }
-
+loadTemplate();
 loadDataPage(1);
 
 
@@ -181,9 +181,9 @@ function loadTemplate(){
 document.getElementById('btn_exportdata').onclick = function(){
 	var data = localStorage.data;
 	if(data==null || data.toString()==''){
-		alert('当前没有配置模板');
+		alert('当前没有存量数据');
 	}else{
-		prompt('当前的模板代码',data);
+		prompt('导出存量数据：',data);
 	}	
 }
 /*
@@ -191,31 +191,41 @@ document.getElementById('btn_exportdata').onclick = function(){
  * ************************************************************
  */
 function loadDataPage(pagenum){
+	var pageSize = 20;
+	var dataTable = document.getElementById('tab_data');
+	dataTable.innerHTML='';
 	var data = localStorage.data;
 	if(data==null||data==""){
-		return;
+		data="[]";
 	}
-	var totalRecord = data.length
-	int totalPageNum = (totalRecord  +  pageSize  - 1) / pageSize;  
-var lab_curpage = document.getElementById('cur_page');
-lab_curpage.innerText="第"+pagenum+"页";
-var lab_curpage = document.getElementById('cur_page');
+	data = JSON.parse(data);
+	var totalRecord = data.length;
+	var totalPageNum =  Math.floor((totalRecord  +  pageSize  - 1) / pageSize);
+	if (totalPageNum==0) {
+		totalPageNum = 1;
+	} 
+	var page_select = document.getElementById('page_select');
+	page_select.innerHTML="";
+	for (var i = 0; i < totalPageNum; i++) {
+		var page_select_option = document.createElement('option');
+		page_select_option.value = (i+1);
+		page_select_option.innerText = (i+1);
+		page_select.appendChild(page_select_option);
+	}
+	var lab_curpage = document.getElementById('cur_page');
+	lab_curpage.innerText=pagenum;
 
-var pageSize = 20;
-
-var dataTable = document.getElementById('tab_data');
-dataTable.innerHTML='';
 	var template = localStorage.stru_template;
 	if(template==null||template==""){
 		return;
 	}
 	template = JSON.parse(template);
 	
-	data = JSON.parse(data);
+	
 	var startRow = (pagenum - 1) * pageSize+1; 
 	var endRow = pagenum * pageSize;
-	if(data.length<endRow){
-		endRow = data.length;
+	if(totalRecord<endRow){
+		endRow = totalRecord;
 	}
 	var new_tr = dataTable.insertRow();
 	new_tr.innerHTML = "<td>行号</td>";
@@ -227,8 +237,71 @@ dataTable.innerHTML='';
 		new_tr.innerHTML = "<td>"+i+"</td>";
 		for (var j = 0; j < template.length; j++) {
 			var new_cell = new_tr.insertCell();
-			alert( data[i-1][template[j]['col_name']]);
 			new_cell.innerText = data[i-1][template[j]['col_name']];
 		}
 	}
+}
+/*
+ * 上一页按钮点击事件
+ * ************************************************************
+ */
+document.getElementById('btn_lastpage').onclick = function(){
+	var lab_curpage = document.getElementById('cur_page');
+	var curpage = lab_curpage.innerText;
+	curpage = parseInt(curpage);
+	if(curpage==1){
+		alert('当前已经是首页了')
+	}else{
+		loadDataPage(curpage-1);
+	}
+	
+}
+/*
+ * 下一页按钮点击事件
+ * ************************************************************
+ */
+document.getElementById('btn_nextpage').onclick = function(){
+	console.log("next page");
+	alert("next page");
+	// var pageSize = 20;
+	// var data = localStorage.data;
+	// if(data==null||data==""){
+	// 	data="[]";
+	// }
+	// alert("data"+data);
+	// data = JSON.parse(data);
+	// var totalRecord = data.length;
+	// alert("totalRecord"+totalRecord);
+	// var totalPageNum =  Math.floor((totalRecord  +  pageSize  - 1) / pageSize);
+	// if (totalPageNum==0) {
+	// 	totalPageNum = 1;
+	// }
+	// alert(totalPageNum);
+	// var lab_curpage = document.getElementById('cur_page');
+	// var curpage = lab_curpage.innerText;
+	// curpage = parseInt(curpage);
+	// if(curpage==totalPageNum){
+	// 	alert('当前已经是末页了');
+	// }else{
+	// 	loadDataPage(curpage+1);
+	// }
+	
+}
+/*
+ * 页面跳转按钮点击事件
+ * ************************************************************
+ */
+document.getElementById('btn_nextpage').onclick = function(){
+	var select_page = parseInt(document.getElementById('page_select').value);
+	loadDataPage(select_page);
+}
+/*
+ * 清空数据按钮点击事件
+ * ************************************************************
+ */
+document.getElementById('btn_cleardata').onclick = function(){
+	localStorage.data="";
+	localStorage.recordcount=0;
+	chrome.browserAction.setBadgeText({text: localStorage.recordcount+""});
+	loadDataPage(1);
 }
