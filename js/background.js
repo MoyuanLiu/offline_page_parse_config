@@ -9,15 +9,15 @@
   var userName = localStorage.username;
   var recordcount = localStorage.recordcount;
   var stru_template = localStorage.stru_template;
-  if(userName==null){
-  	localStorage.username='username';
+  if (userName == null) {
+  	localStorage.username = 'username';//用户名默认username
   }
 
-  if(stru_template==null){
-	localStorage.stru_template='';
+  if (stru_template == null) {
+	  localStorage.stru_template = '';
   }
-if(recordcount==null){
-  localStorage.recordcount=0;
+  if (recordcount == null) {
+    localStorage.recordcount = 0;//默认记录数为0
   }
   //设置徽章信息
 	chrome.browserAction.setBadgeText({text: localStorage.recordcount+""});
@@ -53,12 +53,12 @@ if(recordcount==null){
     chrome.notifications.create('start',mail_opt,function(id){
 	  setTimeout(function(){  
       chrome.notifications.clear(id, function(){});  
-  		}, 3000);  
+  		}, 3000);//3秒自动消失  
 	  });
 
 
  /*
- * 插件点击事件
+ * 插件点击显示隐藏提取页面事件
  * ******************************
  * */ 
 chrome.browserAction.onClicked.addListener(function(tab) {
@@ -84,10 +84,7 @@ chrome.contextMenus.create({
     contexts: ['selection'],
     onclick: fillFieldText
 });
-function fillFieldText(info,tab){
-  alert('选中的文本是：'+info.selectionText);
-  chrome.runtime.sendMessage({type:'fillField',text:info.selectionText});
-}
+
 chrome.contextMenus.create({
     type: 'normal',
     title: '填入链接url',
@@ -95,12 +92,28 @@ chrome.contextMenus.create({
     contexts: ['link'],
     onclick: fillUrlAddress
 });
+/*
+ * 填充选中文本方法
+ * ************************************************************
+ */
+function fillFieldText(info,tab){
+  alert('选中的文本是：' + info.selectionText);
+  chrome.runtime.sendMessage({type:'fillField',text:info.selectionText});
+}
+/*
+ * 填充选中的链接
+ * ************************************************************
+ */
 function fillUrlAddress(info,tab){
-  alert('选中的链接是：'+info.linkUrl);
+  alert('选中的链接是：' + info.linkUrl);
   chrome.runtime.sendMessage({type:'fillField',text:info.linkUrl});
 }
+/*
+ * 填充当前页面的链接
+ * ************************************************************
+ */
 function fillTabUrl(info,tab){
-  alert('提交当前页面的链接：'+tab.url);
+  alert('提交当前页面的链接：' + tab.url);
   chrome.runtime.sendMessage({type:'fillField',text:tab.url});
 }
   
