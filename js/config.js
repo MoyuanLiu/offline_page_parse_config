@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-17 17:24:32
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-11-09 16:26:37
+* @Last Modified time: 2017-11-09 18:08:09
 */
 /*
  * 初始化配置信息部分
@@ -60,6 +60,7 @@ document.getElementById('btn_save').onclick = function(){
 	}
 alert('保存成功');
 console.log('设置保存成功');
+loadDataPage(1);
 }
 /*
  * 添加字段按钮点击事件

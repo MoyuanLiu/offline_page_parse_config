@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-19 14:59:02
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-11-09 17:34:21
+* @Last Modified time: 2017-11-09 18:21:14
 */
 
 
@@ -51,27 +51,27 @@ if (template != null && template.toString() != '') {
 		}else if(col_type == 'select'){
 			field_input = document.createElement('select');
 			var col_content_arr = template[i]['col_content'].split(';');
-			for (var i = 0; i < col_content_arr.length; i++) {
+			for (var j = 0; j < col_content_arr.length; j++) {
 				var field_input_sub = document.createElement('option');
-				// field_input_sub.value = col_content_arr[i].split(',')[1];
-				// field_input_sub.innerText = col_content_arr[i].split(',')[0];
-				field_input_sub.value = col_content_arr[i];
-				field_input_sub.innerText = col_content_arr[i];
+				field_input_sub.value = col_content_arr[j].split(',')[1];
+				field_input_sub.innerText = col_content_arr[j].split(',')[0];
+				// field_input_sub.value = col_content_arr[i];
+				// field_input_sub.innerText = col_content_arr[i];
 				field_input.appendChild(field_input_sub);
 			}
 			field_input.className = 'content';
 		}else if(col_type == 'checkbox'){
 			field_input = document.createElement('div');
 			var col_content_arr = template[i]['col_content'].split(';');
-			for (var i = 0; i < col_content_arr.length; i++) {
+			for (var k = 0; k < col_content_arr.length; k++) {
 				field_input_sub = document.createElement('input');
 				field_input_sub.type = 'checkbox';
-				// field_input_sub.value = col_content_arr[i].split(',')[1];
-				field_input_sub.value = col_content_arr[i];
+				field_input_sub.value = col_content_arr[k].split(',')[1];
+				// field_input_sub.value = col_content_arr[i];
 				field_input_sub.onclick = clickCheckbox;
 				var field_input_span = document.createElement('span');
-				// field_input_span.innerText = col_content_arr[i].split(',')[0];
-				field_input_span.innerText = col_content_arr[i];
+				field_input_span.innerText = col_content_arr[k].split(',')[0];
+				// field_input_span.innerText = col_content_arr[i];
 				var field_input_br = document.createElement('br');
 				field_input.appendChild(field_input_sub);
 				field_input.appendChild(field_input_span);
