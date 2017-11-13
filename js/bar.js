@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-19 14:59:02
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-11-09 18:21:14
+* @Last Modified time: 2017-11-13 19:01:48
 */
 
 
@@ -21,7 +21,9 @@ if (template != null && template.toString() != '') {
 	div_main.id = 'main';
 	var tab_template = document.createElement('table');
 	tab_template.id = 'tab_template';
+	var br = document.createElement('br');
 	div_main.appendChild(tab_template);
+	div_main.appendChild(br);
 	template = JSON.parse(template);
 	for (var i = 0; i < template.length; i++) {
 		var row = tab_template.insertRow();
@@ -55,8 +57,6 @@ if (template != null && template.toString() != '') {
 				var field_input_sub = document.createElement('option');
 				field_input_sub.value = col_content_arr[j].split(',')[1];
 				field_input_sub.innerText = col_content_arr[j].split(',')[0];
-				// field_input_sub.value = col_content_arr[i];
-				// field_input_sub.innerText = col_content_arr[i];
 				field_input.appendChild(field_input_sub);
 			}
 			field_input.className = 'content';
@@ -67,11 +67,9 @@ if (template != null && template.toString() != '') {
 				field_input_sub = document.createElement('input');
 				field_input_sub.type = 'checkbox';
 				field_input_sub.value = col_content_arr[k].split(',')[1];
-				// field_input_sub.value = col_content_arr[i];
 				field_input_sub.onclick = clickCheckbox;
 				var field_input_span = document.createElement('span');
 				field_input_span.innerText = col_content_arr[k].split(',')[0];
-				// field_input_span.innerText = col_content_arr[i];
 				var field_input_br = document.createElement('br');
 				field_input.appendChild(field_input_sub);
 				field_input.appendChild(field_input_span);
@@ -81,8 +79,9 @@ if (template != null && template.toString() != '') {
 		input_cell.appendChild(field_input);
 	}
 	var btn_save = document.createElement('input');
+	btn_save.id='btn_save';
 	btn_save.type = 'button';
-	btn_save.value = 'Save record';
+	btn_save.value = '保存记录信息';
 	btn_save.onclick = saveRecord;
 	div_main.appendChild(btn_save);
 	body.appendChild(div_main);
