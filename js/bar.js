@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-19 14:59:02
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-11-13 19:01:48
+* @Last Modified time: 2017-11-14 09:34:10
 */
 
 
@@ -141,7 +141,7 @@ function saveRecord(){
 		}
 		
 	}
-	var confirmWindow = window.open('confirm.html','保存确认','height=250, width=600, top=50, left=150, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
+	var confirmWindow = window.open('confirm.html','保存确认','height=500, width=1000, top=300, left=300, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
 	 confirmWindow.onload = function(e) {
           confirmWindow.postMessage(JSON.stringify(record),"chrome-extension://" + window.location.host);
       }

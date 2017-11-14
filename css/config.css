@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-17 18:04:19
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-10-18 13:59:22
+* @Last Modified time: 2017-11-14 10:35:18
 */
 /*
  * 清除默认效果
@@ -11,6 +11,12 @@
 	margin: 0;
 	padding: 0;
 }
+.nav {
+	width: 100%;
+	min-height: 56px;
+	background-color: #3498db;
+}
+
 /* input,button
 {
 	font-family:"Arial","Tahoma","微软雅黑","雅黑";

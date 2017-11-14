@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-20 09:50:18
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-11-13 19:02:46
+* @Last Modified time: 2017-11-14 09:18:09
 */
 * {
 	margin: 0;
@@ -43,7 +43,7 @@ input.content{
 }
 
 #tab_template tr:hover {
-	background: #efefef;
+	background: orange;
 	color: #000;
 }
 #tab_template tr:hover input[type=text] {
@@ -67,7 +67,7 @@ input.content{
 	font-size: 15px;
 }
 #btn_save:hover {
-	background: #efefef;
+	background: orange;
 	color: #000;
 }
 
