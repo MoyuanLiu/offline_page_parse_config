@@ -7,44 +7,89 @@
 		<script src="../js/jquery-1.11.3.min.js"></script>
     </head>
     <body>
-    <div>
-    	<div class="nav"></div>
-    	<div class="setting">
-    		<label>用户名: </label>
-		<input type="text" id="txt_username" placeholder='用户名' width="200px" height="30px" />
+
+    	<div class="nav"><img src="../icon/icon.PNG" height="56px"><span>结构化页面提取器</span></div>
+
+    	<div class="setting container">
+    	<h4>用户设置</h4>
+    	<div class="setting_box">
+    		<div class="setting_line">
+    			<label>用户名: </label>
+				<input type="text" id="txt_username" placeholder='用户名' width="200px" height="30px" />
+				<input type="button" value="保存用户名" id="btn_saveusername" class="fl-r"/>
+    		</div>
+    	</div>	
 		<br />
-		<input type="button" value="Import template" id="btn_importtemplate" /><input type="button" value="Export template" id="btn_exporttemplate" /><br>
-		<input type="button" value="Add field" id="btn_addfield" /><input type="button" value="Del field" id="btn_delfield" /><input type="button" value="Clear template" id="btn_cleartemplate" />
-		<br />
+		<h4>模板设置</h4>
+		<div class="setting_box">
+		<div class="setting_line">
+			<label>模板操作：</label>
+			<input type="button" value="导入模板" id="btn_importtemplate" class="fl-r"/>
+			<input type="button" value="导出模板" id="btn_exporttemplate" class="fl-r"/>
+			<input type="button" value="清空模板" id="btn_cleartemplate" class="fl-r"/>
+		</div>
+			<hr>
+			<div class="setting_line">
+				<label>字段操作：</label>
+				<input type="button" value="增加字段" id="btn_addfield" class="fl-r"/>
+				<input type="button" value="删除字段" id="btn_delfield" class="fl-r"/>
+			</div>
+			<hr>
+			<div class="setting_line">
+				<label>当前模板：</label>
+			</div>
+			<hr>
 		<div>
 			<table id="tab_template">
-				<thead>当前模板</thead>
 				<tr>
 					<td>ID</td><td>字段名</td><td>字段显示名称</td><td>字段类型</td><td>字段内容</td>
 				</tr>
 			</table>
 		</div>
-		<br />
-		<button type="button" id="btn_save" value="save">保存所有设置</button><br>
-		<input type="button" value="Export data" id="btn_exportdata" /><input type="button" value="Clear data" id="btn_cleardata" /><br>
+		<hr>
+		<div class="setting_line">
+		<label>保存设置：</label>
+			<input type="button" id="btn_save" value="保存所有设置"class="fl-r"/>
+		</div>
+		
+		</div>
+		
+		<br>
+		<h4>数据管理</h4>
+		<div class="setting_box">
+		<div class="setting_line">
+			<label>数据操作：</label>
+			<input type="button" value="导出数据" id="btn_exportdata" class="fl-r" />
+			<input type="button" value="清空数据" id="btn_cleardata" class="fl-r"/>
+		</div>
+			<hr>
+			<div class="setting_line">
+				<label>当前数据：</label>
+			</div>
+			<hr>
 		<div>
 			<table id="tab_data">
-				<thead>当前数据</thead>
 				
 			</table>
 		</div>
-		<div id="page_view">
+		<hr>
+		<div class="setting_line">
+			<div id="page_view">
 			<input type="button" value="上一页" id="btn_lastpage" />
 			<span>第<label id="cur_page"></label>页</span>
 			<input type="button" value="下一页" id="btn_nextpage" />
 			<select id="page_select"></select>
 			<input type="button" value="跳转" id="btn_jumppage" />
 		</div>
+		</div>
+		
+		</div>
+		
 		
     	</div>
 		
 		<script src="../js/config.js"></script>
 	
-</div>
+
     </body>
 </html>

@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-17 17:24:32
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-11-09 18:08:09
+* @Last Modified time: 2017-11-16 17:20:26
 */
 /*
  * 初始化配置信息部分
@@ -17,14 +17,11 @@ loadTemplate();//加载模板列表
 loadDataPage(1);//加载数据
 
 
-
-
 /*
- * 保存按钮点击事件
+ * 保存用户名按钮点击事件
  * ************************************************************
  */
-document.getElementById('btn_save').onclick = function(){
-
+document.getElementById('btn_saveusername').onclick = function(){
 	if (document.getElementById('txt_username').value == null || document.getElementById('txt_username').value == '') {
 		alert('用户名不能为空');
 	}else {
@@ -34,6 +31,13 @@ document.getElementById('btn_save').onclick = function(){
 			alert('用户名已修改为' + localStorage.username);
 			console.log('用户名已修改为' + localStorage.username);
 		}
+	}
+}
+/*
+ * 保存按钮点击事件
+ * ************************************************************
+ */
+document.getElementById('btn_save').onclick = function(){
 		var data = localStorage.data;
 		if (data != null && data.toString() != '') {
 			alert('当前还有未提交或导出的数据，不能随意修改模板！！！');
@@ -57,7 +61,6 @@ document.getElementById('btn_save').onclick = function(){
 				saveFieldInfo(fieldinfo);
 			}
 		}
-	}
 alert('保存成功');
 console.log('设置保存成功');
 loadDataPage(1);

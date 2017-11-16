@@ -2,7 +2,7 @@
 * @Author: myliu
 * @Date:   2017-10-17 18:04:19
 * @Last Modified by:   lisiyu
-* @Last Modified time: 2017-11-14 10:35:18
+* @Last Modified time: 2017-11-16 17:36:54
 */
 /*
  * 清除默认效果
@@ -16,23 +16,94 @@
 	min-height: 56px;
 	background-color: #3498db;
 }
-
-/* input,button
-{
-	font-family:"Arial","Tahoma","微软雅黑","雅黑";
-	border:0px;
-	vertical-align:middle;
-	margin:8px;
-	line-height:18px;	
-	font-size:18px;
+.nav img {
+	float: left;
 }
-.btn6
-{
-	width:143px;
-	height:35px;
-	line-height:14px;
-	font-size:14px;
-	background:url("image/btn_addfield.jpg") no-repeat left top;
-	color:#959595;
-	padding:0px 0px 2px 14px;	
-} */
+.nav span {
+	margin-left: 10px;
+	height: 56px;
+	line-height: 56px;
+	font-size: 26px;
+/* 	font-weight: bold; */
+	color: white;
+}
+body {
+	background-color: #ddd;
+}
+.container {
+	margin: 0 auto;
+	width: 50%;
+}
+.setting {
+	width: 60%;
+	
+}
+h4 {
+	font-size: 13px;
+	font-weight: 500;
+	color: rgb(97, 97, 97);
+	margin: 10px 0 10px 0;
+}
+.setting_box {
+	padding: 5px;
+	background-color: #fff;
+	box-shadow:2px 2px 3px #aaaaaa;
+}
+.setting_line {
+	height: 40px;
+	line-height: 40px;
+}
+hr {
+	color: #ccc;
+}
+input[type=button] {
+	height: 26px;
+	width: 100px;
+	text-align: center;
+	border-radius: 10px;
+	margin-right: 4px;
+}
+input[type=button]:hover {
+	color: white;
+	background-color: #aaa;
+	font-weight: bold;
+
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	border: 1px solid #bbb;
+	width: 100%;
+	border-radius: 2px;
+}
+tr {
+	height: 40px;
+}
+label {
+	font-size: 13px;
+}
+tr:nth-child(odd) {
+	background-color: #eee;
+}
+tr:nth-child(odd) input {
+	background-color: #eee;
+}
+tr:nth-child(odd) select {
+	background-color: #eee;
+}
+.fl-r {
+	margin-top: 5px;
+	float: right;
+}
+table input {
+	height: 36px;
+	width: 98%;
+}
+
+table select {
+	height: 40px;
+	width: 98%;
+}
+
+
+
