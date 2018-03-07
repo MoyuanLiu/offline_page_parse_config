@@ -13,6 +13,10 @@ body {
   	height: 280px;
   	font-family: sans-serif;
 }
+input[type=select] {
+	height: 30px;
+	font-size: 15px;
+}
 input[type=text] {
 	height: 30px;
 	font-size: 15px;
